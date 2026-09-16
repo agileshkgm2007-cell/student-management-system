@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management System</title>
+
+    <link rel="stylesheet" href="style.css?v=5">
+</head>
+
+<body>
+
+    <!-- Sparkle Cursor -->
+    <div class="sparkle-cursor">
+        ✦
+    </div>
+
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+
+            <div>
+                <h1>🎓 Student Management System</h1>
+
+                <p class="subtitle">
+                    Complete CRUD Based Web Application
+                </p>
+            </div>
+
+            <div class="system-badge">
+                CRUD SYSTEM
+            </div>
+
+        </div>
+
+
+        <!-- Statistics -->
+        <div class="stats-container">
+
+            <div class="stat-card">
+                <h3>👨‍🎓 Total Students</h3>
+                <p id="total-students">0</p>
+            </div>
+
+
+            <div class="stat-card">
+                <h3>💻 Department</h3>
+                <p>AIML</p>
+            </div>
+
+
+            <div class="stat-card">
+                <h3>📚 Current Year</h3>
+                <p>2nd Year</p>
+            </div>
+
+
+            <div class="stat-card">
+                <h3>⭐ Average CGPA</h3>
+                <p id="average-cgpa">0.00</p>
+            </div>
+
+        </div>
+
+
+        <!-- Add Student -->
+        <div class="card">
+
+            <h2 id="form-title">Add Student</h2>
+
+
+            <form id="student-form">
+
+                <input
+                    type="hidden"
+                    id="student-id"
+                >
+
+
+                <!-- Name -->
+                <div class="form-group">
+
+                    <label for="name">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter student name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Register Number -->
+                <div class="form-group">
+
+                    <label for="register_number">
+                        Register Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="register_number"
+                        placeholder="Enter register number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Department -->
+                <div class="form-group">
+
+                    <label for="department">
+                        Department
+                    </label>
+
+                    <input
+                        type="text"
+                        id="department"
+                        placeholder="Enter department"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Year -->
+                <div class="form-group small-field">
+
+                    <label for="year">
+                        Year
+                    </label>
+
+                    <input
+                        type="number"
+                        id="year"
+                        min="1"
+                        max="4"
+                        placeholder="1 - 4"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CGPA -->
+                <div class="form-group small-field">
+
+                    <label for="cgpa">
+                        CGPA
+                    </label>
+
+                    <input
+                        type="number"
+                        id="cgpa"
+                        min="0"
+                        max="10"
+                        step="0.1"
+                        placeholder="0 - 10"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Save Student
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="cancel-btn"
+                        class="secondary"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <p id="message"></p>
+
+        </div>
+
+
+        <!-- Student List -->
+        <div class="card">
+
+            <div class="list-header">
+
+                <div>
+
+                    <h2>📋 Student List</h2>
+
+                    <p class="subtitle">
+                        Manage all registered students
+                    </p>
+
+                </div>
+
+
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="🔍 Search by name or register number"
+                >
+
+            </div>
+
+
+            <div class="table-wrap">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>S.No</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Register Number</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Year</th>
+                            <th>CGPA</th>
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="student-table">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Main JavaScript -->
+    <script src="script.js"></script>
+
+
+    <!-- Sparkle Cursor -->
+    <script>
+
+        const cursor =
+            document.querySelector(".sparkle-cursor");
+
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        let currentX = 0;
+        let currentY = 0;
+
+
+        document.addEventListener("mousemove", function(event) {
+
+            mouseX = event.clientX;
+            mouseY = event.clientY;
+
+        });
+
+
+        function moveCursor() {
+
+            currentX += (mouseX - currentX) * 0.25;
+            currentY += (mouseY - currentY) * 0.25;
+
+
+            cursor.style.left =
+                currentX + "px";
+
+            cursor.style.top =
+                currentY + "px";
+
+
+            requestAnimationFrame(moveCursor);
+
+        }
+
+
+        moveCursor();
+
+
+        // Click sparkle effect
+        document.addEventListener("click", function(event) {
+
+            for (let i = 0; i < 6; i++) {
+
+                const sparkle =
+                    document.createElement("span");
+
+
+                sparkle.className =
+                    "click-sparkle";
+
+
+                sparkle.innerHTML = "✦";
+
+
+                sparkle.style.left =
+                    event.clientX + "px";
+
+                sparkle.style.top =
+                    event.clientY + "px";
+
+
+                sparkle.style.setProperty(
+                    "--x",
+                    (Math.random() * 100 - 50) + "px"
+                );
+
+
+                sparkle.style.setProperty(
+                    "--y",
+                    (Math.random() * 100 - 50) + "px"
+                );
+
+
+                document.body.appendChild(sparkle);
+
+
+                setTimeout(function() {
+
+                    sparkle.remove();
+
+                }, 800);
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
